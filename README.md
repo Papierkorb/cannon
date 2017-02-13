@@ -1,6 +1,6 @@
 # The Cannon
 
-Really fast data de-/serialisation and remote prodecure calling, for when your
+Really fast data de-/serialisation and remote procedure calling, for when your
 process has other things to do than data serialisation.
 
 ## Benchmark
