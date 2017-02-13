@@ -1,0 +1,9 @@
+name: cannon
+version: 0.1.0
+
+authors:
+  - Stefan Merettig <stefan-merettig@nuriaproject.org>
+
+crystal: 0.20.5
+
+license: MIT
