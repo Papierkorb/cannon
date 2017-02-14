@@ -47,8 +47,10 @@ module Cannon
           method: function_hash,
         )
 
-        Cannon.encode(@socket, header)
-        Cannon.encode(@socket, arguments)
+        send_buffer do |io|
+          Cannon.encode(io, header)
+          Cannon.encode(io, arguments)
+        end
       end
 
       private def wait_for_response(handle, ch)
@@ -140,14 +142,15 @@ module Cannon
           @on_local_error.call error
           send_error(header, error) unless header.flags.void_call?
         end
-
-        @socket.flush
       end
 
       private def send_response(header, response)
         header.flags = Protocol::Flags.flags(ResultValue)
-        Cannon.encode @socket, header
-        response.call @socket
+
+        send_buffer do |io|
+          Cannon.encode io, header
+          response.call io
+        end
       end
 
       private def send_error(header, error)
@@ -157,8 +160,17 @@ module Cannon
           message: error.message.to_s,
         )
 
-        Cannon.encode @socket, header
-        Cannon.encode @socket, response
+        send_buffer do |io|
+          Cannon.encode io, header
+          Cannon.encode io, response
+        end
+      end
+
+      private def send_buffer
+        io = IO::Memory.new
+        yield io
+        @socket.write io.to_slice
+        @socket.flush
       end
     end
   end
