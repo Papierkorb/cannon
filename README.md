@@ -1,4 +1,4 @@
-# The Cannon
+# The Cannon [![Build Status](https://travis-ci.org/Papierkorb/cannon.svg?branch=master)](https://travis-ci.org/Papierkorb/cannon)
 
 Really fast data de-/serialisation and remote procedure calling, for when your
 process has other things to do than data serialisation.
