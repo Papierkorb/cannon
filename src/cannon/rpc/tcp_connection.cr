@@ -135,7 +135,7 @@ module Cannon
       end
 
       private def handle_result(channel, error_channel, header)
-        case
+        select
         when writer = channel.receive
           send_response(header, writer) unless header.flags.void_call?
         when error = error_channel.receive
