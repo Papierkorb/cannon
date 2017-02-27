@@ -174,6 +174,16 @@ describe "Cannon serialisation" do
       en_decode(a..b, 7 + 7 + 1).should eq a..b
       en_decode(a...b, 7 + 7 + 1).should eq a...b
     end
+
+    it "works with StaticArray with simple types" do
+      data = StaticArray(Int32, 16).new{|i| i*2}
+      en_decode(data, 16*4).should eq data
+    end
+    it "works with StaticArray with complex types" do
+      data = StaticArray(String, 4).new{|i| i.to_s}
+      en_decode(data, 4*5).should eq data
+    end
+
   end
 
   context "union types" do
