@@ -40,7 +40,7 @@ module Cannon
       # `#close` is called.
       def run
         while @running
-          accept_socket @server.accept
+          accept_socket @server.accept?
         end
       end
 
@@ -51,6 +51,7 @@ module Cannon
       end
 
       protected def accept_socket(socket)
+        return if socket.nil? # Socket was closed
         conn = create_connection socket
 
         spawn do
