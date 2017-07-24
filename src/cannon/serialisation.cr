@@ -66,7 +66,7 @@ module Cannon
   macro fast_decode(io, type)
     begin
       %value = uninitialized {{ type }}
-      {{ io }}.read_fully pointerof(%value).as(UInt8*).to_slice(sizeof(typeof({{ type }})))
+      {{ io }}.read_fully pointerof(%value).as(UInt8*).to_slice(sizeof({{ type }}))
       %value
     end
   end
