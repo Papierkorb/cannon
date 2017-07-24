@@ -26,7 +26,7 @@ module Cannon
         raise ArgumentError.new("service is already owned by a manager") if service.manager?
 
         if id.nil?
-          if service.is_a?(SingletonService)
+          if service.responds_to?(:singleton_service_id)
             id = service.singleton_service_id
           else
             id = next_id
