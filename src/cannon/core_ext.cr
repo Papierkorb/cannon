@@ -219,7 +219,7 @@ struct Time
   include Cannon::FastAuto
 
   def self.from_cannon_io(io)
-    new(Cannon.decode(io, Int64))
+    utc(seconds: Cannon.decode(io, Int64), nanoseconds: 0)
   end
 end
 
