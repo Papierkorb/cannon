@@ -216,10 +216,36 @@ struct Tuple(*T)
 end
 
 struct Time
+  def self.from_cannon_io(io)
+    new(seconds: Cannon.decode(io, Int64), nanoseconds: Cannon.decode(io, Int32), location: Cannon.decode(io, Location))
+  end
+
+  def to_cannon_io(io)
+    to_unix.to_cannon_io io
+    nanosecond.to_cannon_io io
+    location.to_cannon_io io
+
+    io
+  end
+end
+
+struct Time::Span
   include Cannon::FastAuto
 
   def self.from_cannon_io(io)
-    new(Cannon.decode(io, Int64))
+    new(seconds: Cannon.decode(io, Int64), nanoseconds: 0)
+  end
+end
+
+class Time::Location
+  def self.from_cannon_io(io)
+    load(Cannon.decode(io, String))
+  end
+
+  def to_cannon_io(io)
+    name.to_cannon_io io
+
+    io
   end
 end
 
